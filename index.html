@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Wazabii</title>
+	<style type="text/css">
+	body {
+		margin: 0;
+		font-family: Arial, Helvetica, sans-serif;
+	}
+
+	h1, h2, h3, h4, p {
+		margin: 20px 0 10px 0;
+	}
+
+	h1, p, .title { margin-top: 0; }
+
+	h1 {
+		font-size: 34px;
+		line-height: 42px;
+	}
+
+	h2 {
+		font-size: 28px;
+		line-height: 36px;
+	}
+
+	p {
+		font-size: 18px;
+		line-height: 24px;
+	}
+
+	input, textarea {
+		font-size: 16px;
+		line-height: 20px;
+	}
+
+	input {
+
+		height: 46px;
+		border: 1px solid #CCC;
+		background-color: #FFF;
+	}
+
+	input[type="text"] { width: 200px; padding: 0 10px; }
+	input[type="submit"] { padding: 0 18px; }
+
+	.wrapper {
+		max-width: 740px;
+		margin: 0 auto;
+		padding: 30px;
+	}
+
+	</style>
+</head>
+<body>
+
+
+<div class="wrapper">
+	<header class="holder">
+		<h1>Hello world!</h1>
+		<p>Testa nu att söka och se om det fungerar.</p>
+	</header>
+
+	<input id="search-input" type="text" name="search" value="">
+	<input id="search-button" type="submit" value="Search">
+	<div id="search-results">
+		Search results...
+	</div>
+
+</div>
+
+<script>
+	var searchInput = document.getElementById('search-input');
+	var searchButton = document.getElementById('search-button');
+	var resultsDiv = document.getElementById('search-results');
+
+	searchButton.addEventListener('click', function() {
+	  var query = searchInput.value;
+	  resultsDiv.innerHTML = 'Searching...';
+
+	  fetch('https://api.github.com/search/code?q=' + query)
+	    .then(response => response.json())
+	    .then(data => {
+	      var results = data.items;
+	      var html = '';
+
+	      results.forEach(result => {
+	        html += '<div class="result">';
+	        html += '<a href="' + result.html_url + '">' + result.name + '</a>';
+	        html += '<p>' + result.path + '</p>';
+	        html += '</div>';
+	      });
+
+	      if (results.length === 0) {
+	        html = 'No results found';
+	      }
+
+	      resultsDiv.innerHTML = html;
+	    })
+	    .catch(error => {
+	      console.error(error);
+	      resultsDiv.innerHTML = 'An error occurred';
+	    });
+	});
+
+</script>	
+</body>
+</html>
