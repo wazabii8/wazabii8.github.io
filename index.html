@@ -76,12 +76,9 @@
 	var resultsDiv = document.getElementById('search-results');
 
 	searchButton.addEventListener('click', function() {
-
-
-
-	  var user = 'phpMailer', 
+	  var user = 'PHPFuse', 
 	  query = searchInput.value, 
-	  url = 'https://api.github.com/search/code?q=user:'+user+'+'+query+'&type=code';
+	  url = 'https://api.github.com/search/code?q='+query+'+in:readme+user:'+user+'&type=repositories';
 	  resultsDiv.innerHTML = 'Searching...';
 
 	  console.log(url);
