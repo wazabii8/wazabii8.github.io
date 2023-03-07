@@ -79,10 +79,14 @@
 
 
 
-	  var user = 'phpMailer', query = +searchInput.value;
+	  var user = 'phpMailer', 
+	  query = +searchInput.value, 
+	  url = 'https://api.github.com/search/code?q=user:'+user+'+'+query+'&type=code';
 	  resultsDiv.innerHTML = 'Searching...';
 
-	  fetch('https://api.github.com/search/code?q=user:'+user+' '+query+'&type=code')
+	  console.log(url);
+	  
+	  fetch(url)
 	    .then(response => response.json())
 	    .then(data => {
 	      var results = data.items;
