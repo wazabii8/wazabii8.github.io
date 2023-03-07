@@ -76,10 +76,13 @@
 	var resultsDiv = document.getElementById('search-results');
 
 	searchButton.addEventListener('click', function() {
-	  var query = searchInput.value;
+
+
+
+	  var user = 'phpMailer', query = +searchInput.value;
 	  resultsDiv.innerHTML = 'Searching...';
 
-	  fetch('https://api.github.com/search/code?q=' + query)
+	  fetch('https://api.github.com/search/code?q=user:'+user+' '+query+'&type=code')
 	    .then(response => response.json())
 	    .then(data => {
 	      var results = data.items;
